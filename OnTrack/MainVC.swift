@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainVC.swift
 //  OnTrack
 //
 //  Created by Richard Price on 12/09/2017.
@@ -8,17 +8,25 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainVC: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func addGoralBtnPressed(_ sender: Any) {
+        
+        
+        
+        
     }
+    
+
+ 
 
 
 }
