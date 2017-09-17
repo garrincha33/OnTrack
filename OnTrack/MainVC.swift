@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class MainVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var goals: [Goal] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,22 @@ class MainVC: UIViewController {
         tableView.isHidden = false
         
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetch { (complete) in
+            if complete {
+                if goals.count >= 1 {
+                    tableView.isHidden = false
+                } else {
+                    
+                    tableView.isHidden = true
+                }
+            }
+        }
+        
+        tableView.reloadData()
     }
     
     @IBAction func addGoralBtnPressed(_ sender: Any) {
@@ -44,7 +62,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 3
+        return goals.count
         
     }
     
@@ -54,10 +72,33 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             
             return UITableViewCell() }
         
-        cell.configureCell(description: "Eat Salad", type: .shortTerm, goalAmountProgress: 2)
-        
+        let goal = goals[indexPath.row]
+        cell.configureCell(goal: goal)
+
         return cell
     
+    }
+}
+
+
+extension MainVC {
+    
+    func fetch(completion: (_ Complete: Bool) -> ()) {
+        
+        guard let managedContext = context else {return}
+        let fetchRequest = NSFetchRequest<Goal>(entityName: "Goal")
+        
+        do {
+            
+            goals = try managedContext.fetch(fetchRequest)
+            print("successfully loaded from coredata")
+            completion(true)
+            
+        } catch {
+            
+            print("could not fetch : \(error.localizedDescription)")
+            completion(false)
+        }
     }
 }
 
