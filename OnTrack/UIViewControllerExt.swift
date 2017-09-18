@@ -29,4 +29,29 @@ extension UIViewController {
         self.view.window?.layer.add(transition, forKey: kCATransition)
         dismiss(animated: false, completion: nil)
     }
+    
+    func alert() {
+        // Create message
+        let alertController = UIAlertController(title: "Ooooops",
+                                                message: "sorry thats not a valid number for a goal",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController,
+                     animated: true,
+                     completion:nil)
+        
+    }
+    
+    func alertTextGoal() {
+        // Create message
+        let alertController = UIAlertController(title: "Ooooops",
+                                                message: "sorry you didnt enter a goal",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController,
+                     animated: true,
+                     completion:nil)
+        
+    }
+
 }

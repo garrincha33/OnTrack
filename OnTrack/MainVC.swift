@@ -48,6 +48,7 @@ class MainVC: UIViewController {
         }
         presentDetail(createGoalVC)
     }
+    
 }
 
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
@@ -68,7 +69,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    //----------------------- swipe to delete
+    //----------------------- swipe to delete and action
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -83,13 +84,36 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             self.fetchGoals()
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+        let addAction = UITableViewRowAction(style: .normal, title: "ADD") { (rowAction, indexPath) in
+            self.setProgress(atIndexPath: indexPath)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        addAction.backgroundColor = #colorLiteral(red: 0.9385011792, green: 0.7164435983, blue: 0.3331357837, alpha: 1)
         deleteAction.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-        return [deleteAction]
+        return [deleteAction, addAction]
     }
-     //----------------------- swipe to delete
+     //----------------------- swipe to delete and add action
+    
+    
 }
 
 extension MainVC {
+    
+    func setProgress(atIndexPath indexPath: IndexPath) {
+        guard let managedContext = context else {return}
+        let chosenGoal = goals[indexPath.row]
+        if chosenGoal.goalProgress < chosenGoal.goalCompletionValue {
+            chosenGoal.goalProgress = chosenGoal.goalProgress + 1
+        } else {
+            return
+        }
+        do {
+            try managedContext.save()
+        } catch {
+            print("could not set progess : \(error.localizedDescription)")
+        }
+    }
+    
     func deleteGoal(atindexPath indexPath: IndexPath) {
         guard let managedContext = context else {return}
         managedContext.delete(goals[indexPath.row])
@@ -109,6 +133,19 @@ extension MainVC {
             completion(true)
         } catch {
             print("could not fetch : \(error.localizedDescription)")
+            completion(false)
+        }
+    }
+    
+    func undoLastAction(completion: (_ Complete: Bool) -> ()) {
+        guard let managedContext = context else {return}
+        managedContext.undoManager?.undo()
+        do {
+            try managedContext.save()
+            completion(true)
+            print("actions undone")
+        } catch {
+            print("error in saving : \(error.localizedDescription)")
             completion(false)
         }
     }

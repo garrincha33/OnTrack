@@ -16,6 +16,7 @@ class CreateGoalVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var constraintToBottom: NSLayoutConstraint!
     
+    
     var goalType: GoalType = .shortTerm
     
     override func viewDidLoad() {
@@ -60,6 +61,10 @@ class CreateGoalVC: UIViewController, UITextViewDelegate {
             
             finishGoalVC.initData(description: goalTextView.text!, type: goalType)
             presentDetail(finishGoalVC)
+        } else {
+            
+            alertTextGoal()
+            
         }
     }
     
