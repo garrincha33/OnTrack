@@ -60,17 +60,24 @@ class FinishGoalVC: UIViewController,UITextFieldDelegate {
     
 
     @IBAction func createGoalBtnPressed(_ sender: Any) {
-        
-        //pass data to core data
-        if pointsTextField.text != "" {
-            self.save { (complete) in
-                if complete {
-                    
-                    ad?.window?.rootViewController?.dismiss(animated: true, completion: nil)
-                    
+        if pointsTextField.text != "" && pointsTextField.text != "\(0)" {
+                self.save { (complete) in
+                    if complete {
+                        ad?.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
+        
+        else {
+            
+            alert()
+            
+            }
+ 
         }
+    @IBAction func backBtnPressed(_ sender: Any) {
+        
+        dismissDetails()
     }
     
     func save(completion: (_ finished: Bool) -> ()){
