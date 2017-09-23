@@ -35,7 +35,7 @@ class CreateGoalVC: UIViewController, UITextViewDelegate {
         view.endEditing(true)
     }
     
-    func keyboardWillShow(_ notication: NSNotification) {
+    @objc func keyboardWillShow(_ notication: NSNotification) {
         let keyboardFrame = (notication.userInfo?[UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
         UIView.animate(withDuration: 0.3) {
             self.constraintToBottom.constant = keyboardFrame!.height
@@ -43,7 +43,7 @@ class CreateGoalVC: UIViewController, UITextViewDelegate {
         }
     }
     
-    func keyboardWillHide(_ notication: NSNotification) {
+    @objc func keyboardWillHide(_ notication: NSNotification) {
         UIView.animate(withDuration: 0.3) {
             self.constraintToBottom.constant = 0
             self.view.layoutIfNeeded()
