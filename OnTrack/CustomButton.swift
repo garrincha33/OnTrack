@@ -60,7 +60,7 @@ class CustomButton: UIButton {
     
     /////ANIMATIONS/////
     
-    func scaleToSmall() {
+    @objc func scaleToSmall() {
         
         let scaleAnim = POPBasicAnimation(propertyNamed: kPOPLayerScaleXY)
         scaleAnim?.toValue = size
@@ -68,7 +68,7 @@ class CustomButton: UIButton {
         
     }
     
-    func scaleAnimation() {
+    @objc func scaleAnimation() {
         
         let scaleAnim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
         scaleAnim?.velocity = size1
@@ -77,7 +77,7 @@ class CustomButton: UIButton {
         self.layer.pop_add(scaleAnim, forKey: "layerScaleSpringAnimation")
     }
     
-    func scaleDefault() {
+    @objc func scaleDefault() {
         
         let scaleAnim = POPBasicAnimation(propertyNamed: kPOPLayerScaleXY)
         scaleAnim?.toValue = size
