@@ -21,13 +21,11 @@ class MainVC: UIViewController {
         tableView.dataSource = self
         tableView.isHidden = false
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchGoals()
         tableView.reloadData()
     }
-    
     func fetchGoals() {
         self.fetch { (complete) in
             if complete {
@@ -40,7 +38,6 @@ class MainVC: UIViewController {
             }
         }
     }
-    
     @IBAction func addGoralBtnPressed(_ sender: Any) {
         
         guard let createGoalVC = storyboard?.instantiateViewController(withIdentifier: "CreateGoalVC") else {
@@ -48,19 +45,15 @@ class MainVC: UIViewController {
         }
         presentDetail(createGoalVC)
     }
-    
 }
 
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return goals.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "GoalCell") as? GoalCell else {
         return UITableViewCell() }
@@ -68,7 +61,6 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(goal: goal)
         return cell
     }
-    
     //----------------------- swipe to delete and action
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -93,12 +85,8 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         return [deleteAction, addAction]
     }
      //----------------------- swipe to delete and add action
-    
-    
 }
-
 extension MainVC {
-    
     func setProgress(atIndexPath indexPath: IndexPath) {
         guard let managedContext = context else {return}
         let chosenGoal = goals[indexPath.row]
@@ -113,7 +101,6 @@ extension MainVC {
             print("could not set progess : \(error.localizedDescription)")
         }
     }
-    
     func deleteGoal(atindexPath indexPath: IndexPath) {
         guard let managedContext = context else {return}
         managedContext.delete(goals[indexPath.row])
@@ -123,27 +110,24 @@ extension MainVC {
             print("error in saving : \(error.localizedDescription)")
         }
     }
-    
     func fetch(completion: (_ Complete: Bool) -> ()) {
         guard let managedContext = context else {return}
         let fetchRequest = NSFetchRequest<Goal>(entityName: "Goal")
         do {
             goals = try managedContext.fetch(fetchRequest)
-            print("successfully loaded from coredata")
+            
             completion(true)
         } catch {
             print("could not fetch : \(error.localizedDescription)")
             completion(false)
         }
     }
-    
     func undoLastAction(completion: (_ Complete: Bool) -> ()) {
         guard let managedContext = context else {return}
         managedContext.undoManager?.undo()
         do {
             try managedContext.save()
             completion(true)
-            print("actions undone")
         } catch {
             print("error in saving : \(error.localizedDescription)")
             completion(false)

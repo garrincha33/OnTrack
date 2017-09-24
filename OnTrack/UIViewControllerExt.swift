@@ -11,7 +11,6 @@ import UIKit
 extension UIViewController {
     
     func presentDetail(_ viewControllerToPresent: UIViewController) {
-        
     let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionReveal
@@ -21,7 +20,6 @@ extension UIViewController {
         
     }
     func dismissDetails() {
-        
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionReveal
@@ -53,5 +51,4 @@ extension UIViewController {
                      completion:nil)
         
     }
-
 }

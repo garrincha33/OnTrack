@@ -11,9 +11,7 @@ import UIKit
 class FinishGoalVC: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var createGoalBtn: UIButton!
-    
     @IBOutlet weak var pointsTextField: UITextField!
-    
     @IBOutlet weak var constraintToBottom: NSLayoutConstraint!
     
     var goalDescription: String!
@@ -23,11 +21,7 @@ class FinishGoalVC: UIViewController,UITextFieldDelegate {
         
         self.goalDescription = description
         self.goalType = type
-        
-  
     }
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,11 +48,7 @@ class FinishGoalVC: UIViewController,UITextFieldDelegate {
             self.constraintToBottom.constant = 0
             self.view.layoutIfNeeded()
         }
-        
     }
-    
-    
-
     @IBAction func createGoalBtnPressed(_ sender: Any) {
         if pointsTextField.text != "" && pointsTextField.text != "\(0)" {
                 self.save { (complete) in
@@ -73,10 +63,8 @@ class FinishGoalVC: UIViewController,UITextFieldDelegate {
             alert()
             
             }
- 
         }
     @IBAction func backBtnPressed(_ sender: Any) {
-        
         dismissDetails()
     }
     
@@ -84,9 +72,7 @@ class FinishGoalVC: UIViewController,UITextFieldDelegate {
         guard let managedContext = context else  {
             return
         }
-        
         let goal = Goal(context: managedContext)
-        
         goal.goalDescription = goalDescription
         goal.goalType = goalType.rawValue
         goal.goalCompletionValue = Int32(pointsTextField.text!)!
