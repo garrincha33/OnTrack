@@ -16,7 +16,6 @@ class CreateGoalVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var constraintToBottom: NSLayoutConstraint!
     
-    
     var goalType: GoalType = .shortTerm
     
     override func viewDidLoad() {
@@ -48,35 +47,25 @@ class CreateGoalVC: UIViewController, UITextViewDelegate {
             self.constraintToBottom.constant = 0
             self.view.layoutIfNeeded()
         }
-        
     }
     
     @IBAction func nextbtnPressed(_ sender: Any) {
-        
         if goalTextView.text != "" && goalTextView.text != "What is your goal?" {
             guard let finishGoalVC = storyboard?.instantiateViewController(withIdentifier: "finishGoalVC") as? FinishGoalVC else {
-                
                 return
             }
-            
             finishGoalVC.initData(description: goalTextView.text!, type: goalType)
             presentDetail(finishGoalVC)
         } else {
-            
             alertTextGoal()
-            
         }
     }
-    
     @IBAction func shortTermButtonPressed(_ sender: Any) {
-        
         goalType = .shortTerm
         shortTermBtn.setSelectedColor()
         longTermBtn.setDeselectedColor()
     }
-    
     @IBAction func longTermBtn(_ sender: Any) {
-        
         goalType = .longTerm
         shortTermBtn.setDeselectedColor()
         longTermBtn.setSelectedColor()
@@ -86,7 +75,6 @@ class CreateGoalVC: UIViewController, UITextViewDelegate {
         
         dismissDetails()
     }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         goalTextView.text = ""
         goalTextView.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)

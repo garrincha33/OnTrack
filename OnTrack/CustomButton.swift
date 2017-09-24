@@ -15,7 +15,6 @@ class CustomButton: UIButton {
     let size1: CGSize = CGSize(width: 3.0, height: 3.0)
     let size2: CGSize = CGSize(width: 1.0, height: 1.0)
     
-    
     @IBInspectable var cornerRadius: CGFloat = 3.0 {
         
         didSet {
